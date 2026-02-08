@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Projet JavaScript 2 - Fonctions</title>
+
+  <!-- Style simple pour une meilleure lisibilité -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: #2c3e50;
+    }
+
+    .box {
+      background: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    input, button {
+      padding: 8px;
+      margin-top: 5px;
+      width: 100%;
+    }
+
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #27ae60;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Projet JavaScript 2 – Fonctions Interactives</h1>
+
+<!-- ================= CHAÎNES ================= -->
+<div class="box">
+  <h2>1️⃣ Manipulation de chaînes</h2>
+
+  <input id="texte" type="text" placeholder="Entrez une phrase">
+  <button onclick="traiterChaine()">Traiter la chaîne</button>
+
+  <div class="result" id="resultChaine"></div>
+</div>
+
+<!-- ================= TABLEAUX ================= -->
+<div class="box">
+  <h2>2️⃣ Fonctions de tableau</h2>
+
+  <input id="tableau" type="text" placeholder="Ex: 1,2,3,4,5">
+  <button onclick="traiterTableau()">Analyser le tableau</button>
+
+  <div class="result" id="resultTableau"></div>
+</div>
+
+<!-- ================= MATH ================= -->
+<div class="box">
+  <h2>3️⃣ Fonctions mathématiques</h2>
+
+  <input id="nombre" type="number" placeholder="Entrez un nombre">
+  <button onclick="traiterNombre()">Calculer</button>
+
+  <div class="result" id="resultMath"></div>
+</div>
+
+<script>
+  /* =====================
+     FONCTIONS CHAÎNES
+  ====================== */
+
+  function inverserChaine(chaine) {
+    return chaine.split("").reverse().join("");
+  }
+
+  function compterCaracteres(chaine) {
+    return chaine.length;
+  }
+
+  function majusculeMots(phrase) {
+    return phrase
+      .split(" ")
+      .map(mot => mot.charAt(0).toUpperCase() + mot.slice(1))
+      .join(" ");
+  }
+
+  function traiterChaine() {
+    const texte = document.getElementById("texte").value;
+
+    document.getElementById("resultChaine").innerHTML = `
+      Inversé : ${inverserChaine(texte)} <br>
+      Nombre de caractères : ${compterCaracteres(texte)} <br>
+      Majuscules : ${majusculeMots(texte)}
+    `;
+  }
+
+  /* =====================
+     FONCTIONS TABLEAUX
+  ====================== */
+
+  function trouverMax(tab) {
+    return Math.max(...tab);
+  }
+
+  function trouverMin(tab) {
+    return Math.min(...tab);
+  }
+
+  function sommeTableau(tab) {
+    return tab.reduce((s, n) => s + n, 0);
+  }
+
+  function traiterTableau() {
+    const valeurs = document.getElementById("tableau").value
+      .split(",")
+      .map(Number);
+
+    document.getElementById("resultTableau").innerHTML = `
+      Maximum : ${trouverMax(valeurs)} <br>
+      Minimum : ${trouverMin(valeurs)} <br>
+      Somme : ${sommeTableau(valeurs)}
+    `;
+  }
+
+  /* =====================
+     FONCTIONS MATH
+  ====================== */
+
+  function factorielle(n) {
+    if (n < 0) return "Erreur";
+    if (n === 0 || n === 1) return 1;
+    return n * factorielle(n - 1);
+  }
+
+  function estPremier(n) {
+    if (n <= 1) return false;
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+      if (n % i === 0) return false;
+    }
+    return true;
+  }
+
+  function fibonacci(n) {
+    let suite = [];
+    let a = 0, b = 1;
+
+    for (let i = 0; i < n; i++) {
+      suite.push(a);
+      [a, b] = [b, a + b];
+    }
+    return suite;
+  }
+
+  function traiterNombre() {
+    const n = Number(document.getElementById("nombre").value);
+
+    document.getElementById("resultMath").innerHTML = `
+      Factorielle : ${factorielle(n)} <br>
+      Nombre premier : ${estPremier(n)} <br>
+      Fibonacci (${n}) : ${fibonacci(n).join(", ")}
+    `;
+  }
+</script>
+
+</body>
+</html>
